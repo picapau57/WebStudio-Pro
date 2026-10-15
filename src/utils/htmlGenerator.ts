@@ -1000,7 +1000,7 @@ export function generateSingleFileHtml(data: EnrichedSiteData): string {
         ${activeSections.location ? '<li><a href="#contato" class="nav-link">Contato</a></li>' : ''}
       </ul>
 
-      <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="nav-btn">
+      <a href="${whatsappUrl}" onclick="openWhatsAppSmart(); return false;" target="_blank" rel="noopener noreferrer" class="nav-btn">
         ${svgIcons.whatsapp}
         <span>Falar no WhatsApp</span>
       </a>
@@ -1017,7 +1017,7 @@ export function generateSingleFileHtml(data: EnrichedSiteData): string {
       ${activeSections.testimonials ? '<a href="#depoimentos">Depoimentos</a>' : ''}
       ${activeSections.faq ? '<a href="#faq">Perguntas Frequentes</a>' : ''}
       ${activeSections.location ? '<a href="#contato">Endereço e Contato</a>' : ''}
-      <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="nav-btn">
+      <a href="${whatsappUrl}" onclick="openWhatsAppSmart(); return false;" target="_blank" rel="noopener noreferrer" class="nav-btn">
         ${svgIcons.whatsapp} Falar no WhatsApp
       </a>
     </div>
@@ -1039,7 +1039,7 @@ export function generateSingleFileHtml(data: EnrichedSiteData): string {
           <p class="hero-subtitle">${hero.subheadline || businessInfo.slogan}</p>
           
           <div class="hero-actions">
-            <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="btn-primary">
+            <a href="${whatsappUrl}" onclick="openWhatsAppSmart(); return false;" target="_blank" rel="noopener noreferrer" class="btn-primary">
               ${svgIcons.whatsapp}
               <span>${hero.ctaPrimary || 'Solicitar Orçamento no WhatsApp'}</span>
             </a>
@@ -1167,7 +1167,7 @@ export function generateSingleFileHtml(data: EnrichedSiteData): string {
 
             <div class="service-footer">
               <span class="service-price">${srv.price || 'Sob Consulta'}</span>
-              <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="btn-sm-whatsapp">
+              <a href="${whatsappUrl}" onclick="openWhatsAppSmart(); return false;" target="_blank" rel="noopener noreferrer" class="btn-sm-whatsapp">
                 ${svgIcons.whatsapp} Orçar
               </a>
             </div>
@@ -1327,7 +1327,7 @@ export function generateSingleFileHtml(data: EnrichedSiteData): string {
     <div class="container">
       <h2>${ctaBanner.title || 'Pronto para transformar sua experiência?'}</h2>
       <p>${ctaBanner.subtitle || `Fale agora mesmo com a equipe de ${businessInfo.name} e receba atendimento imediato.`}</p>
-      <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="btn-primary" style="background: #25D366; font-size: 18px; padding: 18px 36px;">
+      <a href="${whatsappUrl}" onclick="openWhatsAppSmart(); return false;" target="_blank" rel="noopener noreferrer" class="btn-primary" style="background: #25D366; font-size: 18px; padding: 18px 36px;">
         ${svgIcons.whatsapp}
         <span>${ctaBanner.buttonText || 'Chamar no WhatsApp Agora'}</span>
       </a>
@@ -1480,7 +1480,7 @@ export function generateSingleFileHtml(data: EnrichedSiteData): string {
   ${
     activeSections.whatsappFloat
       ? `
-  <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Falar no WhatsApp">
+  <a href="${whatsappUrl}" onclick="openWhatsAppSmart(); return false;" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Falar no WhatsApp">
     ${svgIcons.whatsapp}
   </a>
   `
@@ -1516,6 +1516,32 @@ export function generateSingleFileHtml(data: EnrichedSiteData): string {
       });
     });
 
+    // Função Inteligente Anti-Bloqueio do WhatsApp (Resolve ERR_BLOCKED_BY_RESPONSE)
+    function openWhatsAppSmart(customText) {
+      const phone = "${cleanWhatsapp}";
+      const defaultText = "Olá! Vi o site de " + ${JSON.stringify(businessInfo.name)} + " e gostaria de saber mais informações e solicitar um orçamento.";
+      const text = customText || defaultText;
+      const encoded = encodeURIComponent(text);
+
+      const isMobile = /Android|iPhone|iPad|iPod|Windows Phone|webOS|BlackBerry/i.test(navigator.userAgent);
+
+      // No computador abre o WhatsApp Web diretamente, eliminando o bloqueio de api.whatsapp.com!
+      // No celular abre wa.me que chama o app nativo
+      const targetUrl = isMobile
+        ? "https://wa.me/" + phone + "?text=" + encoded
+        : "https://web.whatsapp.com/send?phone=" + phone + "&text=" + encoded;
+
+      const a = document.createElement('a');
+      a.href = targetUrl;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        if (a.parentNode) a.parentNode.removeChild(a);
+      }, 500);
+    }
+
     // Handle Contact Form Submit -> Direct to WhatsApp
     function handleFormSubmit(e) {
       e.preventDefault();
@@ -1523,13 +1549,12 @@ export function generateSingleFileHtml(data: EnrichedSiteData): string {
       const phone = document.getElementById('formPhone').value;
       const message = document.getElementById('formMessage').value;
 
-      const fullMessage = "Olá! Vim através do site de " + "${businessInfo.name}" + ":\\n\\n" +
+      const fullMessage = "Olá! Vim através do site de " + ${JSON.stringify(businessInfo.name)} + ":\\n\\n" +
         "👤 *Nome:* " + name + "\\n" +
         "📱 *Telefone:* " + phone + "\\n" +
         "💬 *Mensagem:* " + message;
 
-      const targetUrl = "https://wa.me/" + "${cleanWhatsapp}" + "?text=" + encodeURIComponent(fullMessage);
-      window.open(targetUrl, '_blank');
+      openWhatsAppSmart(fullMessage);
     }
   </script>
 </body>

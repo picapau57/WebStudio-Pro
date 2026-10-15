@@ -793,7 +793,7 @@ export function generateFullSegmentHtml(
         <li><a href="#contato">Contato</a></li>
       </ul>
 
-      <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="btn-nav-whats">
+      <a href="${whatsappUrl}" onclick="openWhatsAppSmart(); return false;" target="_blank" rel="noopener noreferrer" class="btn-nav-whats">
         ${icons.whatsapp}
         <span>Falar no WhatsApp</span>
       </a>
@@ -811,7 +811,7 @@ export function generateFullSegmentHtml(
       <a href="#depoimentos">Avaliações</a>
       <a href="#faq">Dúvidas</a>
       <a href="#contato">Contato</a>
-      <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" style="color: #25D366; font-weight: 700; margin-top: 10px;">
+      <a href="${whatsappUrl}" onclick="openWhatsAppSmart(); return false;" target="_blank" rel="noopener noreferrer" style="color: #25D366; font-weight: 700; margin-top: 10px;">
         Chamar no WhatsApp
       </a>
     </div>
@@ -830,7 +830,7 @@ export function generateFullSegmentHtml(
           <p class="hero-desc">${d.heroSubtitle}</p>
           
           <div class="hero-btns">
-            <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="btn-main">
+            <a href="${whatsappUrl}" onclick="openWhatsAppSmart(); return false;" target="_blank" rel="noopener noreferrer" class="btn-main">
               ${icons.whatsapp}
               <span>${d.heroCta}</span>
             </a>
@@ -894,7 +894,7 @@ export function generateFullSegmentHtml(
             <p class="service-desc">${srv.description}</p>
             <div class="service-foot">
               <span class="service-price">${srv.price}</span>
-              <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="btn-service-whats">
+              <a href="${whatsappUrl}" onclick="openWhatsAppSmart(); return false;" target="_blank" rel="noopener noreferrer" class="btn-service-whats">
                 ${icons.whatsapp} Orçar
               </a>
             </div>
@@ -1000,7 +1000,7 @@ export function generateFullSegmentHtml(
       <p style="color: rgba(255,255,255,0.9); font-size: 18px; max-width: 600px; margin: 0 auto 32px;">
         Entre em contato agora mesmo e tire todas as suas dúvidas diretamente com nossa equipe.
       </p>
-      <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="btn-main" style="font-size: 18px; padding: 18px 36px;">
+      <a href="${whatsappUrl}" onclick="openWhatsAppSmart(); return false;" target="_blank" rel="noopener noreferrer" class="btn-main" style="font-size: 18px; padding: 18px 36px;">
         ${icons.whatsapp}
         <span>Falar no WhatsApp Imediatamente</span>
       </a>
@@ -1115,7 +1115,7 @@ export function generateFullSegmentHtml(
   </footer>
 
   <!-- 14. BOTÃO FLUTUANTE DE WHATSAPP -->
-  <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="float-whats" aria-label="WhatsApp">
+  <a href="${whatsappUrl}" onclick="openWhatsAppSmart(); return false;" target="_blank" rel="noopener noreferrer" class="float-whats" aria-label="WhatsApp">
     ${icons.whatsapp}
   </a>
 
@@ -1143,6 +1143,32 @@ export function generateFullSegmentHtml(
       });
     });
 
+    // Função Inteligente Anti-Bloqueio do WhatsApp (Resolve ERR_BLOCKED_BY_RESPONSE)
+    function openWhatsAppSmart(customText) {
+      const phone = "${cleanWhatsapp}";
+      const defaultText = "Olá! Vi o site de " + ${JSON.stringify(businessName)} + " e gostaria de solicitar um atendimento/orçamento.";
+      const text = customText || defaultText;
+      const encoded = encodeURIComponent(text);
+
+      const isMobile = /Android|iPhone|iPad|iPod|Windows Phone|webOS|BlackBerry/i.test(navigator.userAgent);
+
+      // No computador abre o WhatsApp Web diretamente, eliminando o bloqueio de api.whatsapp.com!
+      // No celular abre wa.me que chama o app nativo
+      const targetUrl = isMobile
+        ? "https://wa.me/" + phone + "?text=" + encoded
+        : "https://web.whatsapp.com/send?phone=" + phone + "&text=" + encoded;
+
+      const a = document.createElement('a');
+      a.href = targetUrl;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        if (a.parentNode) a.parentNode.removeChild(a);
+      }, 500);
+    }
+
     // Envio do formulário direto para o WhatsApp do comércio
     function handleSendLead(e) {
       e.preventDefault();
@@ -1150,13 +1176,12 @@ export function generateFullSegmentHtml(
       const tel = document.getElementById('clienteTel').value;
       const msg = document.getElementById('clienteMensagem').value;
 
-      const texto = "Olá! Vim através do site de " + "${businessName}" + ":\\n\\n" +
+      const texto = "Olá! Vim através do site de " + ${JSON.stringify(businessName)} + ":\\n\\n" +
         "👤 *Nome:* " + nome + "\\n" +
         "📱 *Telefone:* " + tel + "\\n" +
         "💬 *Mensagem:* " + msg;
 
-      const url = "https://wa.me/" + "${cleanWhatsapp}" + "?text=" + encodeURIComponent(texto);
-      window.open(url, '_blank');
+      openWhatsAppSmart(texto);
     }
   </script>
 </body>
