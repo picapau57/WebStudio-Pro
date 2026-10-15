@@ -63,7 +63,7 @@ export const Header: React.FC<HeaderProps> = ({
               }`}
             >
               <Layers className="w-3.5 h-3.5" />
-              <span>12 Modelos de Comércio</span>
+              <span>15 Modelos de Comércio</span>
             </button>
 
             <button

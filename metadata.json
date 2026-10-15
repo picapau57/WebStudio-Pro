@@ -1,6 +1,6 @@
 {
   "name": "WebStudio Pro - Criador de Sites com IA",
-  "description": "Sistema profissional de criação de sites via prompt para 16 segmentos de comércio com 6 modelos de layout e exportação em arquivo único HTML para Netlify e Vercel.",
+  "description": "Sistema profissional de criação de sites via prompt para 15 segmentos de comércio com 9 modelos de layout e exportação em arquivo único HTML para Netlify e Vercel.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

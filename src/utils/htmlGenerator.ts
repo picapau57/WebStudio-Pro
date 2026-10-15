@@ -26,18 +26,21 @@ export function generateSingleFileHtml(data: EnrichedSiteData): string {
   const whatsappUrl = `https://wa.me/${cleanWhatsapp}?text=${whatsappDefaultMsg}`;
 
   // Theme specific styles and variables
-  const isDark = templateId === 3 || templateId === 6;
-  const isLuxury = templateId === 3;
-  const isArtisan = templateId === 4;
+  const isDark = templateId === 3 || templateId === 6 || templateId === 8;
+  const isLuxury = templateId === 3 || templateId === 9;
+  const isArtisan = templateId === 4 || templateId === 7;
   const isCorporate = templateId === 5;
   const isDirect = templateId === 2;
+  const isNature = templateId === 7;
+  const isCyber = templateId === 8;
+  const isEditorial = templateId === 9;
 
   // Font family determination
   let fontLink = '<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">';
   let fontFamily = "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
   let headingFont = fontFamily;
 
-  if (isLuxury) {
+  if (isLuxury || isEditorial) {
     fontLink = '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">';
     headingFont = "'Playfair Display', Georgia, serif";
   }

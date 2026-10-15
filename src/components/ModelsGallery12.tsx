@@ -39,6 +39,9 @@ export const ModelsGallery12: React.FC<ModelsGallery12Props> = ({
     'Automotivo',
     'Alimentação & Festas',
     'Tecnologia',
+    'Saúde Visual & Acessórios',
+    'Estética & Beleza',
+    'Decoração & Marcenaria',
   ];
 
   const filteredModels = SEGMENT_MODELS.filter((m) => {
@@ -72,7 +75,7 @@ export const ModelsGallery12: React.FC<ModelsGallery12Props> = ({
           <div className="flex flex-wrap items-center justify-between gap-4 mb-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold">
               <CheckCircle2 className="w-4 h-4" />
-              <span>12 Modelos HTML Otimizados e Bem Comentados</span>
+              <span>15 Modelos HTML Otimizados e Bem Comentados</span>
             </div>
             <a
               href="https://app.netlify.com/drop"
@@ -86,10 +89,10 @@ export const ModelsGallery12: React.FC<ModelsGallery12Props> = ({
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
-            Modelos de Site HTML por Segmento de Comércio
+            15 Modelos de Site HTML por Segmento de Comércio
           </h2>
           <p className="text-slate-300 text-sm max-width-3xl leading-relaxed">
-            Cada um dos 12 modelos abaixo foi desenhado especificamente para seu
+            Cada um dos 15 modelos abaixo foi desenhado especificamente para seu
             nicho (cores, tipografia, seções e copywriting de conversão). Todos
             são gerados em <strong>arquivo único HTML autônomo</strong> com CSS
             e JS embutidos, prontos para você arrastar para o Netlify Drop ou
@@ -113,9 +116,9 @@ export const ModelsGallery12: React.FC<ModelsGallery12Props> = ({
         </div>
 
         {/* Category Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto w-full pb-2 md:pb-0 scrollbar-none">
+        <div className="flex items-center gap-1.5 overflow-x-auto w-full pb-2 md:pb-0 scrollbar-thin">
           <Filter className="w-4 h-4 text-slate-500 flex-shrink-0 mr-1" />
-          {categories.slice(0, 7).map((cat) => (
+          {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
@@ -125,7 +128,7 @@ export const ModelsGallery12: React.FC<ModelsGallery12Props> = ({
                   : 'bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800'
               }`}
             >
-              {cat === 'todos' ? 'Todos os 12 Modelos' : cat}
+              {cat === 'todos' ? 'Todos os 15 Modelos' : cat}
             </button>
           ))}
         </div>

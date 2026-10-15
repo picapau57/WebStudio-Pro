@@ -210,14 +210,14 @@ export const PromptBuilderForm: React.FC<PromptBuilderFormProps> = ({
               <span className="w-6 h-6 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center text-xs font-black">
                 1
               </span>
-              <span>Escolha o Segmento do Comércio (12 Nichos Disponíveis)</span>
+              <span>Escolha o Segmento do Comércio (15 Nichos Disponíveis)</span>
             </label>
             <span className="text-xs text-slate-500">
               Adapta textos e fotos automaticamente
             </span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5">
             {SEGMENT_MODELS.map((m) => (
               <button
                 type="button"
@@ -250,7 +250,7 @@ export const PromptBuilderForm: React.FC<PromptBuilderFormProps> = ({
               <span className="w-6 h-6 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center text-xs font-black">
                 2
               </span>
-              <span>Selecione o Estilo Arquitetural do Site (6 Modelos)</span>
+              <span>Selecione o Estilo Arquitetural do Site (9 Modelos Disponíveis)</span>
             </label>
             <span className="text-xs text-slate-500">
               Define a estrutura visual e atmosfera

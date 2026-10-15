@@ -27,7 +27,7 @@ export interface WebsiteTemplate {
   tagline: string;
   description: string;
   badge: string;
-  themeStyle: 'minimal' | 'direct' | 'luxury' | 'artisan' | 'corporate' | 'creative';
+  themeStyle: 'minimal' | 'direct' | 'luxury' | 'artisan' | 'corporate' | 'creative' | 'nature' | 'cyber' | 'editorial';
   bestFor: string;
   previewBg: string;
   previewAccent: string;
